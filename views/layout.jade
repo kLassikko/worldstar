@@ -3,5 +3,8 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
-  body
+    script(src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js")
+    script(src='/javascripts/angularApp.js')
+  body(ng-app="Worldstar" ng-controller="MainCtrl")
+
     block content

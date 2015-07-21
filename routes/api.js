@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var strava = require('strava-v3');
 
-router.get('/club/:id', function(req, res, next) {
+router.get('/club/:id/members', function(req, res, next) {
 
   strava.clubs.listMembers({id:req.params.id},function(err,payload) {
     if(!err) {
