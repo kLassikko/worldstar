@@ -1,8 +1,28 @@
 var express = require('express');
 var router = express.Router();
 var strava = require('strava-v3');
+var apicache = require('apicache').options({ debug: true }).middleware;
 
-router.get('/club/:id/members', function(req, res, next) {
+router.get('/club/:id', apicache('5 minutes'), function(req, res, next) {
+
+  strava.clubs.get({id:req.params.id},function(err,payload) {
+    if(!err) {
+      response = {
+        'id':payload.id,
+        'name':payload.name,
+        'avatar':payload.profile,
+        'description':payload.description
+      };
+      return res.json(response);
+    }
+    else {
+      console.log(err);
+    }
+  });
+
+});
+
+router.get('/club/:id/members', apicache('5 minutes'), function(req, res, next) {
 
   strava.clubs.listMembers({id:req.params.id},function(err,payload) {
     if(!err) {
@@ -25,7 +45,7 @@ router.get('/club/:id/members', function(req, res, next) {
 
 });
 
-router.get('/club/:id/activities', function(req, res, next) {
+router.get('/club/:id/activities', apicache('5 minutes'), function(req, res, next) {
 
   strava.clubs.listActivities({id:req.params.id},function(err,payload) {
     if(!err) {

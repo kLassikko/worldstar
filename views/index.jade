@@ -2,7 +2,9 @@ extends layout
 
 block content
   #header
-    h1= title
+    img#clubAvatar(src="{{info.avatar}}")
+    h1 {{info.name}}
+    h4 {{info.description}}
 
   #member(ng-repeat="member in members")
     span#name {{member.name}} 
