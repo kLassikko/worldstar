@@ -2,9 +2,20 @@ extends layout
 
 block content
   #header
-    img#clubAvatar(src="{{info.avatar}}")
-    h1 {{info.name}}
-    h4 {{info.description}}
+    img#clubAvatar(class="img-circle" ng-src="{{info.avatar}}")
+    #headerText
+      h1 {{info.name}}
+      h4 {{info.description}}
+      #clubStats
+        span{{activitySum.distance}} km ridden this month.  
+        br
+        span{{activitySum.elevation_gain}} m climbed.
 
   #member(ng-repeat="member in members")
-    span#name {{member.name}} 
+    a(title="{{member.name}}" href="http://www.strava.com/athletes/{{member.id}}")
+      img#memberAvatar(class="img-circle" ng-src="{{member.avatar}}") 
+
+  #leaderboard
+    #leaderboardEntry(ng-repeat="item in leaderboard | orderBy:'-distance'")
+      span(class="glyphicon glyphicon-glass"){{item.name}} {{item.distance}}
+

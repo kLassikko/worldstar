@@ -1,6 +1,7 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 10px;
 }
 
 a {
@@ -8,10 +9,39 @@ a {
 }
 
 #header {
-  padding-bottom: 50px;
+  height: 144px;
+  margin-bottom: 20px;
 }
 
 #clubAvatar {
   float: left;
-  margin-right: 20px;
+  margin-right: 35px;
+  padding-top: 10px;
+}
+
+#headerText {
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+#clubStats {
+  float: right;
+  padding-right: 30%;
+}
+
+#member {
+  float: left;
+}
+
+#memberAvatar {
+  width: 30px;
+  height: 30px;
+  margin-left: 10px;
+}
+
+#leaderboard {
+  margin-top:90px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;
 }

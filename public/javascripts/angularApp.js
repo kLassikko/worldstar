@@ -6,7 +6,9 @@ app.factory('club', ['$http', function($http){
 	var o = {
 		info: [],
 		members: [],
-		activities: []
+		activities: [],
+		activitySum: [],
+		leaderboard: []
 	};
 
 	o.getInfo = function() {
@@ -28,6 +30,20 @@ app.factory('club', ['$http', function($http){
 		});
 	};
 
+	o.getActivitySum = function() {
+
+		return $http.get('/api/club/'+ clubID +'/activities/sum').success(function(data){
+			angular.copy(data, o.activitySum);
+		});
+	};
+
+	o.getLeaderboard = function() {
+
+		return $http.get('/api/club/'+ clubID +'/leaderboard').success(function(data){
+			angular.copy(data, o.leaderboard);
+		});
+	};
+
 
 	return o;
 }])
@@ -40,9 +56,12 @@ function($scope, club){
 	$scope.info = club.info;
 	$scope.members = club.members;
 	$scope.activities = club.activities;
+	$scope.activitySum = club.activitySum;
+	$scope.leaderboard = club.leaderboard;
 
 	club.getInfo();
 	club.getMembers();
 	club.getActivities();
-
+	club.getActivitySum();
+	club.getLeaderboard();
 }]);
