@@ -25,8 +25,9 @@ app.factory('club', ['$http', function($http){
 
 	o.getActivities = function() {
 
-		return $http.get('/api/club/'+ clubID +'/activities').success(function(data){
+		return $http.get('/api/club/'+ clubID +'/activities/latest').success(function(data){
 			angular.copy(data, o.activities);
+			console.log(data[0]);
 		});
 	};
 
@@ -57,9 +58,11 @@ function($scope, club){
 	$scope.members = club.members;
 	$scope.activitySum = club.activitySum;
 	$scope.leaderboard = club.leaderboard;
+	$scope.activities = club.activities;
 
 	club.getInfo();
 	club.getMembers();
 	club.getActivitySum();
 	club.getLeaderboard();
+	club.getActivities();
 }]);

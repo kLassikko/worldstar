@@ -8,16 +8,16 @@ block content
       h1 {{info.name}}
       h4 {{info.description}}
     #clubStats
-      span{{activitySum.distance}} km ridden this month.  
+      span {{activitySum.distance}} km ridden this month.  
       br
-      span{{activitySum.elevation_gain}} m climbed.
+      span {{activitySum.elevation_gain}} m climbed.
 
     #member(ng-repeat="member in members")
       a(title="{{member.name}}" href="http://www.strava.com/athletes/{{member.id}}")
         img#memberAvatar(class="img-circle" ng-src="{{member.avatar}}") 
 
-  #leaderboard
-    h2 Monthly leaderboard
+  #content
+    h2 Monthly Leaderboard
     table(class="table table-striped")
       thead
         tr
@@ -25,16 +25,38 @@ block content
           th Distance
           th Rides
           th Climbing
-          th Average Speed
+          th Avg. Speed
           th Achievements
       tbody
         tr(ng-repeat="item in leaderboard | orderBy:'-distance'")
           td
-            img#memberAvatar(class="img-circle" ng-src="{{item.avatar}}")
-            {{item.name}} 
-          td{{item.distance}} km
-          td{{item.ride_count}}
-          td{{item.elevation_gain}} m
-          td{{item.average_speed}} km/h
-          td{{item.achievement_count}}
+            img#memberAvatar(class="img-circle" ng-src="{{item.avatar}}") 
+            span {{item.name}} 
+          td {{item.distance}} km
+          td {{item.ride_count}}
+          td {{item.elevation_gain}} m
+          td {{item.average_speed}} km/h
+          td {{item.achievement_count}}
+
+    #feed
+      h3 Latest Rides
+      table(class="table table-striped")
+        thead
+          tr
+            th Rider
+            th Date
+            th Ride
+            th Distance
+            th Avg. Speed
+        tbody
+          tr(ng-repeat="activity in activities")
+            td 
+              img#memberAvatar(class="img-circle" ng-src="{{activity.avatar}}") 
+              {{activity.athlete}}
+            td {{activity.start_date}}
+            td 
+              a(href="http://www.strava.com/activities/{{activity.id}}"){{activity.name}}
+            td {{activity.distance}} km
+            td {{activity.average_speed}} km/h
+
 

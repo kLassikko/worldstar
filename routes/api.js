@@ -3,7 +3,7 @@ var router = express.Router();
 var strava = require('strava-v3');
 var apicache = require('apicache').options({ debug: true }).middleware;
 
-router.get('/club/:id', apicache('12 hours'), function(req, res, next) {
+router.get('/club/:id', apicache('60 minutes'), function(req, res, next) {
 
   strava.clubs.get({id:req.params.id},function(err,payload) {
     if(!err) {
@@ -51,10 +51,13 @@ router.get('/club/:id/leaderboard', apicache('5 minutes'), function(req, res, ne
   strava.clubs.listActivities({id:req.params.id, per_page:200},function(err,payload) {
     if(!err) {
 
-      var currentMonth = new Date().getMonth() + 1;
+      if(payload.message == "Authorization Error"){
+        return res.status(401);
+      }
+      var currentDate = new Date().toISOString();
 
       var reduced = payload.reduce(function(acc, x) {
-        if(x.start_date_local.substring(5,7) != currentMonth){
+        if(x.start_date_local.substring(0,7) != currentDate.substring(0,7)){
           return acc;
         }
         var id = acc[x.athlete.id];
@@ -105,11 +108,11 @@ router.get('/club/:id/activities', apicache('5 minutes'), function(req, res, nex
   strava.clubs.listActivities({id:req.params.id, per_page:200},function(err,payload) {
     if(!err) {
 
-      var currentMonth = new Date().getMonth() + 1;
+      var currentDate = new Date().toISOString();
 
       var response = [];
       for(var i = 0; i < payload.length; ++i){
-        if(payload[i].start_date_local.substring(5,7) != currentMonth){
+        if(payload[i].start_date_local.substring(0,7) != currentDate.substring(0,7)){
           break;
         }
         response[i] = {
@@ -138,19 +141,59 @@ router.get('/club/:id/activities', apicache('5 minutes'), function(req, res, nex
 
 });
 
+//last 5 rides
+router.get('/club/:id/activities/latest', apicache('5 minutes'), function(req, res, next) {
+
+  strava.clubs.listActivities({id:req.params.id, per_page:200},function(err,payload) {
+    if(!err) {
+
+      var currentDate = new Date().toISOString();
+
+      var response = [];
+      for(var i = 0; i < payload.length; ++i){
+        if(payload[i].start_date_local.substring(0,7) != currentDate.substring(0,7) || 
+          i > 4){
+          break;
+        }
+        response[i] = {
+          'id':payload[i].id, 
+          'athlete':payload[i].athlete.firstname + ' ' + payload[i].athlete.lastname,
+          'athlete_id':payload[i].athlete.id,
+          'avatar':payload[i].athlete.profile_medium,
+          'name':payload[i].name,
+          'distance':(payload[i].distance/1000).toFixed(1),
+          'time':payload[i].moving_time,
+          'elevation_gain':Math.round(payload[i].total_elevation_gain),
+          'type':payload[i].type,
+          'start_date':payload[i].start_date_local.substring(0,10),
+          'achievement_count':payload[i].achievement_count,
+          'average_speed':(payload[i].average_speed*3.6).toFixed(1),
+          'average_watts':Math.round(payload[i].average_watts),
+          'energy_output':Math.round(payload[i].kilojoules)
+        };
+      }
+      return res.json(response);
+    }
+    else {
+      console.log(err);
+    }
+  });
+
+});
+
 router.get('/club/:id/activities/sum', apicache('5 minutes'), function(req, res, next) {
 
   strava.clubs.listActivities({id:req.params.id, per_page:200},function(err,payload) {
     if(!err) {
 
-      var currentMonth = new Date().getMonth() + 1;
+      var currentDate = new Date().toISOString();
 
       var distance = 0;
       var time = 0;
       var elevation_gain = 0;
 
       for(var i = 0; i < payload.length; ++i){
-        if(payload[i].start_date_local.substring(5,7) != currentMonth){
+        if(payload[i].start_date_local.substring(0,7) != currentDate.substring(0,7)){
           break;
         }
         distance += payload[i].distance/1000;

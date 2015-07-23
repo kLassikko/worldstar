@@ -12,6 +12,7 @@ a {
   height: 144px;
   margin-bottom: 20px;
   width: 70%;
+  max-width: 900px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -42,10 +43,19 @@ a {
   margin-right: 10px;
 }
 
-#leaderboard {
+#content {
   margin-top:90px;
   margin-left: auto;
   margin-right: auto;
   width: 60%;
+  max-width: 750px;
 }
 
+#feed {
+  padding-top: 50px;
+}
+
+#footer {
+  padding-top: 50px;
+  text-align: center;
+}
