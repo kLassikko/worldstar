@@ -22,13 +22,13 @@ block content
       thead
         tr
           th Name
-          th Distance
-          th Rides
-          th Climbing
-          th Avg. Speed
-          th Achievements
+          th(class="clickable" ng-click="order('-distance')") Distance
+          th(class="clickable" ng-click="order('-ride_count')") Rides
+          th(class="clickable" ng-click="order('-elevation_gain')") Climbing
+          th(class="clickable" ng-click="order('-average_speed')") Avg. Speed
+          th(class="clickable" ng-click="order('-achievement_count')") Achievements
       tbody
-        tr(ng-repeat="item in leaderboard | orderBy:'-distance'")
+        tr(ng-repeat="item in leaderboard | orderBy:predicate:reverse")
           td
             img#memberAvatar(class="img-circle" ng-src="{{item.avatar}}") 
             span {{item.name}} 

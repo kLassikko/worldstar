@@ -85,7 +85,7 @@ router.get('/club/:id/leaderboard', apicache('5 minutes'), function(req, res, ne
           'distance':parseFloat((reduced[key].distance/1000).toFixed(1)),
           'time':reduced[key].moving_time,
           'elevation_gain':Math.round(reduced[key].total_elevation_gain),
-          'average_speed':((reduced[key].distance/reduced[key].moving_time)*3.6).toFixed(1),
+          'average_speed':parseFloat(((reduced[key].distance/reduced[key].moving_time)*3.6).toFixed(1)),
           'achievement_count':reduced[key].achievement_count,
           'ride_count':reduced[key].rides,
           'avatar':reduced[key].athlete.profile_medium

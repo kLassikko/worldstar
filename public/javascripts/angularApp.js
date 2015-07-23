@@ -60,6 +60,11 @@ function($scope, club){
 	$scope.leaderboard = club.leaderboard;
 	$scope.activities = club.activities;
 
+	$scope.predicate = '-distance';
+	$scope.order = function(predicate) {
+		$scope.predicate = predicate;
+	};
+
 	club.getInfo();
 	club.getMembers();
 	club.getActivitySum();
