@@ -23,6 +23,7 @@ block content
         tr
           th Name
           th Distance
+          th Rides
           th Climbing
           th Average Speed
           th Achievements
@@ -32,6 +33,7 @@ block content
             img#memberAvatar(class="img-circle" ng-src="{{item.avatar}}")
             {{item.name}} 
           td{{item.distance}} km
+          td{{item.ride_count}}
           td{{item.elevation_gain}} m
           td{{item.average_speed}} km/h
           td{{item.achievement_count}}

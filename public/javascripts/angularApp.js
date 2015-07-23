@@ -55,13 +55,11 @@ function($scope, club){
 
 	$scope.info = club.info;
 	$scope.members = club.members;
-	$scope.activities = club.activities;
 	$scope.activitySum = club.activitySum;
 	$scope.leaderboard = club.leaderboard;
 
 	club.getInfo();
 	club.getMembers();
-	club.getActivities();
 	club.getActivitySum();
 	club.getLeaderboard();
 }]);

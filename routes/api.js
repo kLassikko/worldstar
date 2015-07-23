@@ -59,12 +59,14 @@ router.get('/club/:id/leaderboard', apicache('5 minutes'), function(req, res, ne
         }
         var id = acc[x.athlete.id];
         if (id) {
+          id.rides += 1;
           id.distance += x.distance;
           id.moving_time += x.moving_time;
           id.total_elevation_gain += x.total_elevation_gain;
           id.achievement_count += x.achievement_count;
         } else {
           acc[x.athlete.id] = x;
+          acc[x.athlete.id].rides = 1;
           delete x.athlete.id;
         }
         return acc;
@@ -74,7 +76,6 @@ router.get('/club/:id/leaderboard', apicache('5 minutes'), function(req, res, ne
       var iterator = 0;
 
       for(var key in reduced) {
-        console.log(key);
         response[iterator] = {
           'id':key,
           'name':reduced[key].athlete.firstname + ' ' + reduced[key].athlete.lastname,
@@ -83,6 +84,7 @@ router.get('/club/:id/leaderboard', apicache('5 minutes'), function(req, res, ne
           'elevation_gain':Math.round(reduced[key].total_elevation_gain),
           'average_speed':((reduced[key].distance/reduced[key].moving_time)*3.6).toFixed(1),
           'achievement_count':reduced[key].achievement_count,
+          'ride_count':reduced[key].rides,
           'avatar':reduced[key].athlete.profile_medium
         };
         ++iterator;
