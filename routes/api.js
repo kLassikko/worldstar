@@ -28,18 +28,12 @@ router.get('/club/:id/members', apicache('60 minutes'), function(req, res, next)
     if(!err) {
 
       var response = [];
-      var avatar;
       for(var i = 0; i < payload.length; ++i){
-        
-        if(payload[i].profile_medium == 'avatar/athlete/medium.png'){
-          avatar = "/images/avatar.jpg";
-        } else{
-          avatar = payload[i].profile_medium;
-        }
+
         response[i] = {
           'id':payload[i].id, 
           'name':payload[i].firstname,
-          'avatar':avatar
+          'avatar':payload[i].profile_medium
         };
       }
 
@@ -87,8 +81,9 @@ router.get('/club/:id/leaderboard', apicache('5 minutes'), function(req, res, ne
           'distance':parseFloat((reduced[key].distance/1000).toFixed(1)),
           'time':reduced[key].moving_time,
           'elevation_gain':Math.round(reduced[key].total_elevation_gain),
-          'average_speed':(reduced[key].distance/reduced[key].moving_time)*3.6,
-          'achievement_count':reduced[key].achievement_count
+          'average_speed':((reduced[key].distance/reduced[key].moving_time)*3.6).toFixed(1),
+          'achievement_count':reduced[key].achievement_count,
+          'avatar':reduced[key].athlete.profile_medium
         };
         ++iterator;
       }

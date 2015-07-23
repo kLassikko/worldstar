@@ -1,7 +1,7 @@
 body {
   padding-left: 50px;
   padding-right: 50px;
-  padding-top: 10px;
+  padding-top: 30px;
 }
 
 a {
@@ -11,6 +11,9 @@ a {
 #header {
   height: 144px;
   margin-bottom: 20px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #clubAvatar {
@@ -25,7 +28,7 @@ a {
 }
 
 #clubStats {
-  float: right;
+  float: left;
   padding-right: 30%;
 }
 
@@ -36,7 +39,7 @@ a {
 #memberAvatar {
   width: 30px;
   height: 30px;
-  margin-left: 10px;
+  margin-right: 10px;
 }
 
 #leaderboard {
@@ -45,3 +48,4 @@ a {
   margin-right: auto;
   width: 60%;
 }
+
