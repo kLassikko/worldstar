@@ -151,8 +151,7 @@ router.get('/club/:id/activities/latest', apicache('5 minutes'), function(req, r
 
       var response = [];
       for(var i = 0; i < payload.length; ++i){
-        if(payload[i].start_date_local.substring(0,7) != currentDate.substring(0,7) || 
-          i > 4){
+        if(i > 4){
           break;
         }
         response[i] = {
